@@ -9,12 +9,11 @@ $(document).ready(function () {
             return;
         }
 
-        var apiKey = "802a76c7"; 
-        var url = "https://www.omdbapi.com/?t="
+        var apiKey = "802a76c7";
+        var url = "https://www.omdbapi.com/?s="
                   + movieName +
                   "&apikey=" + apiKey;
 
-        // AJAX Request
         $.ajax({
             url: url,
             method: "GET",
@@ -25,18 +24,20 @@ $(document).ready(function () {
                     return;
                 }
 
-                var title = data.Title;
-                var year = data.Year;
-                var rating = data.imdbRating;
-                var poster = data.Poster;
+                var movies = data.Search;   
+                var output = "";
 
-                $("#movieResult").html(
-                    "<h2>" + title + "</h2>" +
-                    "<h3><strong>Year:</strong> " + year + "</h3>" +
-                    "<h3><strong>IMDB Rating:</strong> " + rating + "</h3>" +
-                    "<img src='" + poster + "' width='200'>"
-                );
+                for (var i = 0; i < movies.length; i++) {
 
+                    output +=
+                        "<div style='margin-bottom:20px'>" +
+                        "<h2>" + movies[i].Title + "</h2>" +
+                        "<h3><strong>Year:</strong> " + movies[i].Year + "</h3>" +
+                        "<img src='" + movies[i].Poster + "' width='150'>" +
+                        "</div>";
+                }
+
+                $("#movieResult").html(output);
                 $("#movieResult").addClass("show");
             },
             error: function () {
