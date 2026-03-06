@@ -9,13 +9,14 @@ $(document).ready(function () {
             return;
         }
 
-        var apiKey = "802a76c7";
-        var searchUrl = "https://www.omdbapi.com/?s="
-                        + movieName +
-                        "&apikey=" + apiKey;
+        var apiKey = "YOUR_API_KEY"; 
+        var url = "https://www.omdbapi.com/?t="
+                  + movieName +
+                  "&apikey=" + apiKey;
 
+        // AJAX Request
         $.ajax({
-            url: searchUrl,
+            url: url,
             method: "GET",
             success: function (data) {
 
@@ -24,34 +25,19 @@ $(document).ready(function () {
                     return;
                 }
 
-                var movies = data.Search;
-                $("#movieResult").html("");  
+                var title = data.Title;
+                var year = data.Year;
+                var rating = data.imdbRating;
+                var poster = data.Poster;
 
-                for (var i = 0; i < movies.length; i++) {
+                $("#movieResult").html(
+                    "<h2>" + title + "</h2>" +
+                    "<h3><strong>Year:</strong> " + year + "</h3>" +
+                    "<h3><strong>IMDB Rating:</strong> " + rating + "</h3>" +
+                    "<img src='" + poster + "' width='200'>"
+                );
 
-                    var detailsUrl = "https://www.omdbapi.com/?i="
-                                     + movies[i].imdbID +
-                                     "&apikey=" + apiKey;
-
-                    
-                    $.ajax({
-                        url: detailsUrl,
-                        method: "GET",
-                        success: function (movieData) {
-
-                            var output =
-                                "<div style='margin-bottom:20px'>" +
-                                "<h2>" + movieData.Title + "</h2>" +
-                                "<h3><strong>Year:</strong> " + movieData.Year + "</h3>" +
-                                "<h3><strong>IMDb Rating:</strong> " + movieData.imdbRating + "</h3>" +
-                                "<img src='" + movieData.Poster + "' width='150'>" +
-                                "</div>";
-
-                            $("#movieResult").append(output);
-                            $("#movieResult").addClass("show");
-                        }
-                    });
-                }
+                $("#movieResult").addClass("show");
             },
             error: function () {
                 alert("Error fetching data!");
