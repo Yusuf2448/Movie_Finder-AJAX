@@ -9,7 +9,7 @@ $(document).ready(function () {
             return;
         }
 
-        var apiKey = "YOUR_API_KEY"; 
+        var apiKey = "802a76c7"; 
         var url = "https://www.omdbapi.com/?t="
                   + movieName +
                   "&apikey=" + apiKey;
@@ -47,3 +47,4 @@ $(document).ready(function () {
     });
 
 });
+
